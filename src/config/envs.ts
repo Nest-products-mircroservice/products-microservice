@@ -1,10 +1,13 @@
 import 'dotenv/config';
-import Joi from 'joi';
+import * as joi from 'joi';
 import { IEnvVarsInterface } from 'src/interfaces/env-vars.interface';
 
-const envsSchema = Joi.object({
-  PORT: Joi.number().required(),
-}).unknown(true);
+const envsSchema = joi
+  .object({
+    PORT: joi.number().required(),
+    DATABASE_URL: joi.string().required(),
+  })
+  .unknown(true);
 
 const { error, value } = envsSchema.validate(process.env);
 
@@ -14,4 +17,4 @@ if (error) {
 
 const envsVars: IEnvVarsInterface = value;
 
-export const envs = { port: envsVars.PORT };
+export const envs = { port: envsVars.PORT, databaseUrl: envsVars.DATABASE_URL };
