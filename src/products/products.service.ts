@@ -24,7 +24,7 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
 
   async findAll(paginationDto: PaginationDto) {
     const { page, limit } = paginationDto;
-    const totalPages = await this.product.count({where: {available: true}});
+    const totalPages = await this.product.count({ where: { available: true } });
 
     return {
       data: await this.product.findMany({
@@ -50,19 +50,24 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
+
+    const { id: __, ...data } = updateProductDto;
+
     await this.findOne(id);
-    
+
     return await this.product.update({
       where: { id },
-      data: updateProductDto,
+      data,
     });
   }
 
   async remove(id: number) {
     await this.findOne(id);
 
-    return this.product.update({ where: { id }, data: {
-      available: false
-    } });
+    return this.product.update({
+      where: { id }, data: {
+        available: false
+      }
+    });
   }
 }
