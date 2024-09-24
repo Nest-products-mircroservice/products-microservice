@@ -9,32 +9,32 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @MessagePattern({ cmd: 'create-product' })
+  @MessagePattern('create-product')
   create(@Payload() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
-  @MessagePattern({ cmd: 'find-all-products' })
+  @MessagePattern('find-all-products')
   findAll(@Payload() paginationDto: PaginationDto) {
     return this.productsService.findAll(paginationDto);
   }
 
-  @MessagePattern({ cmd: 'find-one-product' })
+  @MessagePattern('find-one-product')
   findOne(@Payload('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
   }
 
-  @MessagePattern({ cmd: 'update-product' })
+  @MessagePattern('update-product')
   update(@Payload() updateProductDto: UpdateProductDto) {
     return this.productsService.update(updateProductDto.id, updateProductDto);
   }
 
-  @MessagePattern({ cmd: 'delete-product' })
+  @MessagePattern('delete-product')
   remove(@Payload('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
   }
 
-  @MessagePattern({ cmd: 'validate-products' })
+  @MessagePattern('validate-products')
   validateProducts(@Payload('ids') ids: number[]) {
     return this.productsService.validateProducts(ids);
   }
