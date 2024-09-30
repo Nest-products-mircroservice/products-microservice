@@ -75,6 +75,7 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
         id: {
           in: ids,
         },
+        available: true,
       },
     });
 
